@@ -6,5 +6,5 @@ CREATE TABLE torneos (
    fechaFin Date NOT NULL,
    estado VARCHAR NOT NULL,
    ubicacion VARCHAR(50) NOT NULL,
-   id_recinto INT NOT NUll,  
+   id_recinto INT(20) NOT NUll,  
 )

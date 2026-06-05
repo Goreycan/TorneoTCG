@@ -22,11 +22,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "torneos")
 public class Torneo {
 
-
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-
 
    @NotBlank(message = "El Torneo debe tener nombre")
    @Size(min = 3, max = 50)
@@ -41,7 +39,11 @@ public class Torneo {
    @NotBlank(message = "El estado de torneo es obligatorio")
    private String estado;
 
-   @NotNull(message = "El nivel de midiclorianos es obligatorio")
-   @Min(100)
-   private Integer midiclorianos;
+    @NotBlank(message = "La ubicación del torneo es obligatoria")
+    @Size(min = 3, max = 50)
+    private String ubicación;
+
+   @NotNull(message = "El id de recinto es obligatorio")
+   @Min(20)
+   private Long id_recinto;
 }
