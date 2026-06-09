@@ -30,7 +30,7 @@ public class Resultado {
 
    @NotNull(message = "La partida es obligatoria")
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "id_partida", nullable = false)
+   @JoinColumn(name = "id_partida", nullable = false, unique = true)
    private Partida partida;
 
    // Ganador
