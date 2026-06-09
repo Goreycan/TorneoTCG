@@ -2,6 +2,7 @@ package com.example.TorneoTCG.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,11 +20,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "torneos")
+@Table(name = "torneo")
 public class Torneo {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Column(name = "id_torneo")
    private Long id;
 
    @NotBlank(message = "El Torneo debe tener nombre")
@@ -41,9 +43,9 @@ public class Torneo {
 
     @NotBlank(message = "La ubicación del torneo es obligatoria")
     @Size(min = 3, max = 50)
-    private String ubicación;
+    private String ubicacion;
 
    @NotNull(message = "El id de recinto es obligatorio")
-   @Min(20)
+   @Min(1)
    private Long id_recinto;
 }
