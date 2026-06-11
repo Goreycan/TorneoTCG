@@ -34,17 +34,17 @@ public class Mazo {
     private Long id;
 
     @NotBlank(message = "El nombre del mazo es obligatorio")
-    @Size(min = 3, max = 50, message = "El nombre del mazo debe tener entre 3 y 50 caracteres")
-    @Column(nullable = false, length = 50)
+    @Size(min = 3, max = 20, message = "El nombre del mazo debe tener entre 3 y 50 caracteres")
+    @Column(nullable = false, length = 20)
     private String nombre;
 
-    @Column(length = 255)
+    @Column(length = 50)
     private String descripcion;
 
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
 
-    @Column(length = 50)
+    @Column(length = 10)
     private String estado;
 
     @ManyToOne

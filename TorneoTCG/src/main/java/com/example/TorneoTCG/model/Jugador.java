@@ -7,12 +7,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -21,28 +23,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "carta")
-public class Carta {
+@Table(name = "jugadores")
+public class Jugador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_carta")
-    private Long id;
+    private Integer id;
 
-    @NotBlank(message = "El nombre de la carta es obligatorio")
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(min = 3, max = 20, message = "El nombre debe tener entre 3 y 100 caracteres")
     @Column(nullable = false, length = 20)
     private String nombre;
 
-    @Column(length = 50)
-    private String descripcion;
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "Debe ser un email válido")
+    @Column(nullable = false, unique = true, length = 50)
+    private String email;
 
-    @Column(length = 20)
-    private String rareza;
-
-    @Min(value = 0, message = "El costo no puede ser negativo")
-    private Integer costo;
-
-    @OneToMany(mappedBy = "carta")
+    @OneToMany(mappedBy = "jugador")
     @ToString.Exclude
-    private List<CartaMazo> cartaMazos;
+    private List<Participacion> participaciones;
+
+    @OneToMany(mappedBy = "jugador")
+    @ToString.Exclude
+    private List<Mazo> mazos;
 }
