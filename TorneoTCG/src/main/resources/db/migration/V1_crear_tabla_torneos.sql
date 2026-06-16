@@ -17,6 +17,14 @@ CREATE TABLE ronda (
     CONSTRAINT fk_ronda_torneo FOREIGN KEY (id_torneo) REFERENCES torneo(id_torneo)
 );
 
+CREATE TABLE participacion (
+    id_participacion INT AUTO_INCREMENT PRIMARY KEY,
+    id_jugador INT NOT NULL,
+    id_torneo INT NOT NULL,
+    ronda_inscripcion INT,
+    CONSTRAINT fk_participacion_torneo FOREIGN KEY (id_torneo) REFERENCES torneo(id_torneo)
+);
+
 CREATE TABLE partida (
     id_partida INT AUTO_INCREMENT PRIMARY KEY,
     mesa VARCHAR(10) NOT NULL,
