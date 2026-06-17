@@ -54,7 +54,6 @@ public class TorneoService {
         dto.setFechaInicio(torneo.getFechaInicio());
         dto.setFechaFin(torneo.getFechaFin());
         dto.setEstado(torneo.getEstado());
-        dto.setUbicacion(torneo.getUbicacion());
         dto.setIdRecinto(torneo.getIdRecinto());
 
         return dto;

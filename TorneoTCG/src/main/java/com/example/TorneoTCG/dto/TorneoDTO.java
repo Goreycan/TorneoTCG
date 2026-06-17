@@ -16,7 +16,5 @@ public class TorneoDTO {
 
     private String estado;
 
-    private String ubicacion;
-
     private Long idRecinto;
 }

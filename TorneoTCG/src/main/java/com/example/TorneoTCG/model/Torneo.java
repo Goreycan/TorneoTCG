@@ -41,10 +41,6 @@ public class Torneo {
    @NotBlank(message = "El estado de torneo es obligatorio")
    private String estado;
 
-    @NotBlank(message = "La ubicación del torneo es obligatoria")
-    @Size(min = 3, max = 50)
-    private String ubicacion;
-
    @NotNull(message = "El id de recinto es obligatorio")
    @Min(1)
    private Long id_recinto;
