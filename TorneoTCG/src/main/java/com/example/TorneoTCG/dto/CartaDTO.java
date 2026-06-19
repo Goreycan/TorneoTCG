@@ -18,5 +18,5 @@ public class CartaDTO {
     private String rareza;
     private Integer costo;
     
-    private List<String> nombresMazosDondeAparece;
+    private List<String> nombresMazos;
 }

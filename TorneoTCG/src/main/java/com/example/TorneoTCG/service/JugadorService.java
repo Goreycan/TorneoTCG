@@ -12,11 +12,9 @@ import com.example.TorneoTCG.repository.JugadorRepository;
 import com.example.TorneoTCG.model.Mazo;
 
 import jakarta.transaction.Transactional;
-
 @Service
 @Transactional
 public class JugadorService {
-
     @Autowired
     private JugadorRepository jugadorRepository;
 
@@ -48,23 +46,27 @@ public class JugadorService {
     }
 
     private JugadorDTO convertirADTO(Jugador jugador) {
-    JugadorDTO dto = new JugadorDTO();
-    dto.setId(jugador.getId());
-    dto.setNombre(jugador.getNombre());
-    dto.setApellido(jugador.getApellido());
-    dto.setEmail(jugador.getEmail());
-    if (jugador.getMazos() != null && !jugador.getMazos().isEmpty()) {
-        dto.setNombreMazos(
-            jugador.getMazos()
-                .stream()
-                .map(Mazo::getNombre)
-                .toList());
-    } else {
-        dto.setNombreMazos(new ArrayList<>());
-    }
-    return dto;
-}
-    
+        if (jugador == null) return null;
 
-    
+        JugadorDTO dto = new JugadorDTO();
+        dto.setId(jugador.getId());
+        dto.setNombre(jugador.getNombre());
+        dto.setEmail(jugador.getEmail());
+        try {
+            //  mapear los nombres de los mazos del jugador
+            if (jugador.getMazos() != null && !jugador.getMazos().isEmpty()) {
+                dto.setNombreMazos(
+                    jugador.getMazos()
+                        .stream()
+                        .map(Mazo::getNombre)
+                        .toList());
+            } else {
+                dto.setNombreMazos(new ArrayList<>());
+            }
+        } catch (Exception e) {
+            // Si algo falla leyendo los mazos de la base de datos aseguramos que la lista no rompa el programa mandándola vacía.
+            dto.setNombreMazos(new ArrayList<>());
+        }
+        return dto;
+    }
 }
