@@ -1,0 +1,9 @@
+package com.example.TorneoTCG.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.TorneoTCG.model.Organizador;
+
+public interface OrganizadorRepository extends JpaRepository<Organizador, Long> {
+
+}
