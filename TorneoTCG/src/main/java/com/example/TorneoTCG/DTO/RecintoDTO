@@ -1,0 +1,18 @@
+package com.example.TorneoTCG.DTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
+public class RecintoDTO {
+    private Long id;
+    private String nombre;
+    private String direccion;
+    private Integer capacidad;
+    private Long comunaId;
+    private ComunaDTO comuna;
+}
