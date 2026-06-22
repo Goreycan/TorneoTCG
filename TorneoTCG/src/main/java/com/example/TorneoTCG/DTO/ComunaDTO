@@ -1,0 +1,15 @@
+package com.example.TorneoTCG.DTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class ComunaDTO {
+    private Long id;
+    private String nombre;
+    private RegionDTO region;
+}
