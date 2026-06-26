@@ -45,6 +45,34 @@ public class ResultadoService {
         return convertirADTO(guardado);
     }
 
+    public ResultadoDTO actualizar(Long id, Resultado resultado) {
+    Resultado existente = resultadoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Resultado no encontrado"));
+    existente.setPartida(resultado.getPartida());
+    existente.setGanador(resultado.getGanador());
+    existente.setPuntajeJugador1(resultado.getPuntajeJugador1());
+    existente.setPuntajeJugador2(resultado.getPuntajeJugador2());
+    existente.setPuntajeJugador3(resultado.getPuntajeJugador3());
+    existente.setPuntajeJugador4(resultado.getPuntajeJugador4());
+    existente.setPuntajeJugador5(resultado.getPuntajeJugador5());
+    existente.setPosicionJugador1(resultado.getPosicionJugador1());
+    existente.setPosicionJugador2(resultado.getPosicionJugador2());
+    existente.setPosicionJugador3(resultado.getPosicionJugador3());
+    existente.setPosicionJugador4(resultado.getPosicionJugador4());
+    existente.setPosicionJugador5(resultado.getPosicionJugador5());
+    Resultado actualizado = resultadoRepository.save(existente);
+    return convertirADTO(actualizado);
+}
+
+    public String eliminar(Long id) {
+    if (resultadoRepository.existsById(id)) {
+        resultadoRepository.deleteById(id);
+        return "Resultado eliminado correctamente";
+    } else {
+        return "Resultado no encontrado";
+    }
+}
+
     private ResultadoDTO convertirADTO(Resultado resultado) {
 
         ResultadoDTO dto = new ResultadoDTO();

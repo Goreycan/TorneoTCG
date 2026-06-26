@@ -48,6 +48,25 @@ public class ParticipacionService {
         return convertirADTO(guardada);
     }
 
+    public ParticipacionDTO actualizar(Long id, Participacion participacion) {
+    Participacion existente = participacionRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Participación no encontrada"));
+    existente.setJugador(participacion.getJugador());
+    existente.setTorneo(participacion.getTorneo());
+    existente.setRondaInscripcion(participacion.getRondaInscripcion());
+    Participacion actualizada = participacionRepository.save(existente);
+    return convertirADTO(actualizada);
+}
+
+    public String eliminar(Long id) {
+    if (participacionRepository.existsById(id)) {
+        participacionRepository.deleteById(id);
+        return "Participación eliminada correctamente";
+    } else {
+        return "Participación no encontrada";
+    }
+}
+
     private ParticipacionDTO convertirADTO(
             Participacion participacion) {
 

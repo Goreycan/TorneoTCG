@@ -45,6 +45,25 @@ public class RondaService {
         return convertirADTO(guardada);
     }
 
+    public RondaDTO actualizar(Long id, Ronda ronda) {
+    Ronda existente = rondaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Ronda no encontrada"));
+    existente.setNumeroRonda(ronda.getNumeroRonda());
+    existente.setFecha(ronda.getFecha());
+    existente.setTorneo(ronda.getTorneo());
+    Ronda actualizada = rondaRepository.save(existente);
+    return convertirADTO(actualizada);
+}
+
+    public String eliminar(Long id) {
+    if (rondaRepository.existsById(id)) {
+        rondaRepository.deleteById(id);
+        return "Ronda eliminada correctamente";
+    } else {
+        return "Ronda no encontrada";
+    }
+}
+
     private RondaDTO convertirADTO(Ronda ronda) {
 
         RondaDTO dto = new RondaDTO();

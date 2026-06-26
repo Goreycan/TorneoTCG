@@ -45,6 +45,31 @@ public class PartidaService {
         return convertirADTO(guardada);
     }
 
+    public PartidaDTO actualizar(Long id, Partida partida) {
+    Partida existente = partidaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Partida no encontrada"));
+    existente.setMesa(partida.getMesa());
+    existente.setEstado(partida.getEstado());
+    existente.setRonda(partida.getRonda());
+    existente.setCantidadJugadores(partida.getCantidadJugadores());
+    existente.setJugador1(partida.getJugador1());
+    existente.setJugador2(partida.getJugador2());
+    existente.setJugador3(partida.getJugador3());
+    existente.setJugador4(partida.getJugador4());
+    existente.setJugador5(partida.getJugador5());
+    Partida actualizada = partidaRepository.save(existente);
+    return convertirADTO(actualizada);
+}
+
+    public String eliminar(Long id) {
+    if (partidaRepository.existsById(id)) {
+        partidaRepository.deleteById(id);
+        return "Partida eliminada correctamente";
+    } else {
+        return "Partida no encontrada";
+    }
+}
+
     private PartidaDTO convertirADTO(Partida partida) {
 
         PartidaDTO dto = new PartidaDTO();

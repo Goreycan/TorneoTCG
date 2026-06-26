@@ -45,6 +45,28 @@ public class TorneoService {
         return convertirADTO(guardado);
     }
 
+    public TorneoDTO actualizar(Long id, Torneo torneo) {
+    Torneo existente = torneoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Torneo no encontrado"));
+    existente.setNombre(torneo.getNombre());
+    existente.setFechaInicio(torneo.getFechaInicio());
+    existente.setFechaFin(torneo.getFechaFin());
+    existente.setEstado(torneo.getEstado());
+    existente.setId_recinto(torneo.getId_recinto());
+
+    Torneo actualizado = torneoRepository.save(existente);
+    return convertirADTO(actualizado);
+}
+
+public String eliminar(Long id) {
+    if (torneoRepository.existsById(id)) {
+        torneoRepository.deleteById(id);
+        return "Torneo eliminado correctamente";
+    } else {
+        return "Torneo no encontrado";
+    }
+}
+
     private TorneoDTO convertirADTO(Torneo torneo) {
 
         TorneoDTO dto = new TorneoDTO();
