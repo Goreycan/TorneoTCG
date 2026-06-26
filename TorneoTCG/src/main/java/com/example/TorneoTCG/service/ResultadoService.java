@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.TorneoTCG.dto.ResultadoDTO;
+import com.example.TorneoTCG.model.Partida;
 import com.example.TorneoTCG.model.Resultado;
+import com.example.TorneoTCG.repository.PartidaRepository;
 import com.example.TorneoTCG.repository.ResultadoRepository;
 
 @Service
@@ -15,6 +17,9 @@ public class ResultadoService {
 
     @Autowired
     private ResultadoRepository resultadoRepository;
+
+    @Autowired
+    private PartidaRepository partidaRepository;
 
     public List<ResultadoDTO> obtenerTodos() {
 
@@ -41,6 +46,13 @@ public class ResultadoService {
     public ResultadoDTO guardar(Resultado resultado) {
 
         Resultado guardado = resultadoRepository.save(resultado);
+
+        Partida partida = partidaRepository.findById(guardado.getPartida().getId())
+                .orElseThrow(() ->
+                        new RuntimeException("Partida no encontrada"));
+
+        partida.setEstado("FINALIZADA");
+        partidaRepository.save(partida);
 
         return convertirADTO(guardado);
     }

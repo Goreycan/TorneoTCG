@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.TorneoTCG.dto.RankingDTO;
+import com.example.TorneoTCG.dto.RondaDTO;
 import com.example.TorneoTCG.dto.TorneoDTO;
 import com.example.TorneoTCG.model.Torneo;
 import com.example.TorneoTCG.service.RankingService;
+import com.example.TorneoTCG.service.RondaService;
 import com.example.TorneoTCG.service.TorneoLogicaService;
 import com.example.TorneoTCG.service.TorneoService;
 
@@ -35,6 +37,9 @@ public class TorneoController {
 
     @Autowired
     private RankingService rankingService;
+
+    @Autowired
+    private RondaService rondaService;
 
     @GetMapping
     public ResponseEntity<List<TorneoDTO>> todas() {
@@ -81,6 +86,16 @@ public class TorneoController {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{idTorneo}/rondas")
+    public ResponseEntity<?> obtenerRondasPorTorneo(@PathVariable Long idTorneo) {
+        try {
+            List<RondaDTO> rondas = rondaService.obtenerPorTorneo(idTorneo);
+            return new ResponseEntity<>(rondas, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
