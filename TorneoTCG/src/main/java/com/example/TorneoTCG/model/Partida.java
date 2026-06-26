@@ -1,7 +1,5 @@
 package com.example.TorneoTCG.model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -44,38 +42,27 @@ public class Partida {
    @JoinColumn(name = "id_ronda", nullable = false)
    private Ronda ronda;
 
-   // Cantidad de jugadores
-
    @NotNull(message = "La cantidad de jugadores es obligatoria")
    @Min(value = 3, message = "La partida debe tener mínimo 3 jugadores")
    @Max(value = 5, message = "La partida permite máximo 5 jugadores")
    @Column(name = "cantidad_jugadores", nullable = false)
    private Integer cantidadJugadores;
 
-   //Jugadores obligatorios
-
    @NotNull(message = "Jugador 1 obligatorio")
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "id_jugador1", nullable = false)
-   private Jugador jugador1;
+   @Column(name = "id_jugador1", nullable = false)
+   private Integer idJugador1;
 
    @NotNull(message = "Jugador 2 obligatorio")
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "id_jugador2", nullable = false)
-   private Jugador jugador2;
+   @Column(name = "id_jugador2", nullable = false)
+   private Integer idJugador2;
 
    @NotNull(message = "Jugador 3 obligatorio")
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "id_jugador3", nullable = false)
-   private Jugador jugador3;
+   @Column(name = "id_jugador3", nullable = false)
+   private Integer idJugador3;
 
-    // Jugadores opcionales
+   @Column(name = "id_jugador4")
+   private Integer idJugador4;
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "id_jugador4")
-   private Jugador jugador4;
-
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "id_jugador5")
-   private Jugador jugador5;
+   @Column(name = "id_jugador5")
+   private Integer idJugador5;
 }

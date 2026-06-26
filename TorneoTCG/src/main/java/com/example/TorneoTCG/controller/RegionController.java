@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.TorneoTCG.DTO.RegionDTO;
+import com.example.TorneoTCG.dto.RegionDTO;
 import com.example.TorneoTCG.model.Region;
 import com.example.TorneoTCG.service.RegionService;
 

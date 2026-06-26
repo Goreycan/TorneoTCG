@@ -30,7 +30,7 @@ public class JugadorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JugadorDTO> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<JugadorDTO> buscarPorId(@PathVariable Integer id) {
         try {
             JugadorDTO jugador = jugadorService.buscarPorId(id);
             return new ResponseEntity<>(jugador, HttpStatus.OK);
@@ -50,7 +50,7 @@ public class JugadorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarJugador(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarJugador(@PathVariable Integer id) {
         String resultado = jugadorService.eliminar(id);
         
         if (resultado.contains("descalificado")) {

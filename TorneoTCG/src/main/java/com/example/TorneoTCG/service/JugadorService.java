@@ -24,13 +24,13 @@ public class JugadorService {
                  .toList();
     }
 
-    public JugadorDTO buscarPorId(Long id) {
+    public JugadorDTO buscarPorId(Integer id) {
         Jugador jugador = jugadorRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("¡El duelista no existe en nuestros registros!"));
         return convertirADTO(jugador);
     }
 
-    public String eliminar(Long id) {
+    public String eliminar(Integer id) {
         try {
             Jugador jugador = jugadorRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException(" El jugador con ID " + id + " no existe."));

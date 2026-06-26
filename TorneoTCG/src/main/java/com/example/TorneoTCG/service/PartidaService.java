@@ -52,11 +52,11 @@ public class PartidaService {
     existente.setEstado(partida.getEstado());
     existente.setRonda(partida.getRonda());
     existente.setCantidadJugadores(partida.getCantidadJugadores());
-    existente.setJugador1(partida.getJugador1());
-    existente.setJugador2(partida.getJugador2());
-    existente.setJugador3(partida.getJugador3());
-    existente.setJugador4(partida.getJugador4());
-    existente.setJugador5(partida.getJugador5());
+    existente.setIdJugador1(partida.getIdJugador1());
+    existente.setIdJugador2(partida.getIdJugador2());
+    existente.setIdJugador3(partida.getIdJugador3());
+    existente.setIdJugador4(partida.getIdJugador4());
+    existente.setIdJugador5(partida.getIdJugador5());
     Partida actualizada = partidaRepository.save(existente);
     return convertirADTO(actualizada);
 }
@@ -84,26 +84,26 @@ public class PartidaService {
         );
 
         dto.setIdJugador1(
-                partida.getJugador1().getId()
+                partida.getIdJugador1()
         );
 
         dto.setIdJugador2(
-                partida.getJugador2().getId()
+                partida.getIdJugador2()
         );
 
         dto.setIdJugador3(
-                partida.getJugador3().getId()
+                partida.getIdJugador3()
         );
 
-        if (partida.getJugador4() != null) {
+        if (partida.getIdJugador4() != null) {
             dto.setIdJugador4(
-                    partida.getJugador4().getId()
+                    partida.getIdJugador4()
             );
         }
 
-        if (partida.getJugador5() != null) {
+        if (partida.getIdJugador5() != null) {
             dto.setIdJugador5(
-                    partida.getJugador5().getId()
+                    partida.getIdJugador5()
             );
         }
 

@@ -51,7 +51,7 @@ public class ParticipacionService {
     public ParticipacionDTO actualizar(Long id, Participacion participacion) {
     Participacion existente = participacionRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Participación no encontrada"));
-    existente.setJugador(participacion.getJugador());
+    existente.setIdJugador(participacion.getIdJugador());
     existente.setTorneo(participacion.getTorneo());
     existente.setRondaInscripcion(participacion.getRondaInscripcion());
     Participacion actualizada = participacionRepository.save(existente);
@@ -75,7 +75,7 @@ public class ParticipacionService {
         dto.setId(participacion.getId());
 
         dto.setIdJugador(
-                participacion.getJugador().getId()
+                participacion.getIdJugador()
         );
 
         dto.setIdTorneo(

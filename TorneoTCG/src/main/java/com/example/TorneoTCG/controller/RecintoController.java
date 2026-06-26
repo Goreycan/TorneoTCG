@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.TorneoTCG.DTO.RecintoDTO;
+import com.example.TorneoTCG.dto.RecintoDTO;
 import com.example.TorneoTCG.model.Recinto;
 import com.example.TorneoTCG.service.RecintoService;
 

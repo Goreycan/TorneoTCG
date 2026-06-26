@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.TorneoTCG.DTO.ComunaDTO;
-import com.example.TorneoTCG.DTO.RegionDTO;
+import com.example.TorneoTCG.dto.ComunaDTO;
+import com.example.TorneoTCG.dto.RegionDTO;
 import com.example.TorneoTCG.model.Comuna;
 import com.example.TorneoTCG.model.Region;
 import com.example.TorneoTCG.repository.ComunaRepository;

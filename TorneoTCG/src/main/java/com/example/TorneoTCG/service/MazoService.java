@@ -40,7 +40,7 @@ public class MazoService {
         return mazoRepository.save(mazo);
     }
 
-    public String asignarDueñoAMazo(Long mazoId, Long jugadorId) {
+    public String asignarDueñoAMazo(Long mazoId, Integer jugadorId) {
         Mazo mazo = mazoRepository.findById(mazoId)
                 .orElseThrow(() -> new RuntimeException("El mazo no existe"));
 

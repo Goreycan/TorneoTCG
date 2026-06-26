@@ -49,7 +49,7 @@ public class ResultadoService {
     Resultado existente = resultadoRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Resultado no encontrado"));
     existente.setPartida(resultado.getPartida());
-    existente.setGanador(resultado.getGanador());
+    existente.setIdGanador(resultado.getIdGanador());
     existente.setPuntajeJugador1(resultado.getPuntajeJugador1());
     existente.setPuntajeJugador2(resultado.getPuntajeJugador2());
     existente.setPuntajeJugador3(resultado.getPuntajeJugador3());
@@ -84,7 +84,7 @@ public class ResultadoService {
         );
 
         dto.setIdGanador(
-                resultado.getGanador().getId()
+                resultado.getIdGanador()
         );
 
         dto.setPuntajeJugador1(resultado.getPuntajeJugador1());

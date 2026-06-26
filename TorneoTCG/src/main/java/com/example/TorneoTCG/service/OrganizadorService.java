@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.TorneoTCG.DTO.OrganizadorDTO;
+import com.example.TorneoTCG.dto.OrganizadorDTO;
 import com.example.TorneoTCG.model.Organizador;
 import com.example.TorneoTCG.repository.OrganizadorRepository;
 

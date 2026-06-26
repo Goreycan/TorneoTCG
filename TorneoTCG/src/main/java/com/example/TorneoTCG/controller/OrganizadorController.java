@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.TorneoTCG.DTO.OrganizadorDTO;
+import com.example.TorneoTCG.dto.OrganizadorDTO;
 import com.example.TorneoTCG.model.Organizador;
 import com.example.TorneoTCG.service.OrganizadorService;
 
