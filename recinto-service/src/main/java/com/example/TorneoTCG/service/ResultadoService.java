@@ -45,21 +45,8 @@ public class ResultadoService {
 
     public ResultadoDTO guardar(Resultado resultado) {
 
-    Partida partida = partidaRepository.findById(resultado.getPartida().getId())
-            .orElseThrow(() ->
-                    new RuntimeException("Partida no encontrada"));
+        Resultado guardado = resultadoRepository.save(resultado);
 
-<<<<<<< HEAD
-    resultado.setPartida(partida);
-
-    Resultado guardado = resultadoRepository.save(resultado);
-
-    partida.setEstado("FINALIZADA");
-    partidaRepository.save(partida);
-
-    return convertirADTO(guardado);
-}
-=======
         Partida partida = partidaRepository.findById(guardado.getPartida().getId())
                 .orElseThrow(() ->
                         new RuntimeException("Partida no encontrada"));
@@ -69,7 +56,6 @@ public class ResultadoService {
 
         return convertirADTO(guardado);
     }
->>>>>>> origin/codex/revisar-logica-de-torneologicaservice-y-rankingservice-08cbfl
 
     public ResultadoDTO actualizar(Long id, Resultado resultado) {
     Resultado existente = resultadoRepository.findById(id)
