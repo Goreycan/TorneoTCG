@@ -4,8 +4,7 @@ CREATE TABLE torneo (
    fecha_inicio DATE NOT NULL,
    fecha_fin DATE NOT NULL,
    estado VARCHAR(255) NOT NULL,
-   id_recinto BIGINT NOT NULL,
-   CONSTRAINT fk_torneo_recinto FOREIGN KEY (id_recinto) REFERENCES recinto(id_recinto)
+   id_recinto BIGINT NOT NULL
 );
 
 CREATE TABLE ronda (

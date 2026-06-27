@@ -52,7 +52,7 @@ public class TorneoService {
     existente.setFechaInicio(torneo.getFechaInicio());
     existente.setFechaFin(torneo.getFechaFin());
     existente.setEstado(torneo.getEstado());
-    existente.setId_recinto(torneo.getId_recinto());
+    existente.setIdRecinto(torneo.getIdRecinto());
 
     Torneo actualizado = torneoRepository.save(existente);
     return convertirADTO(actualizado);
