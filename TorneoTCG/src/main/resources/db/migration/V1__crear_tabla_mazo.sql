@@ -1,4 +1,4 @@
-CREATE TABLE jugador (
+CREATE TABLE jugadores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(20) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE
@@ -24,5 +24,5 @@ CREATE TABLE carta_mazo (
     id_carta_mazo INT AUTO_INCREMENT PRIMARY KEY,
     cantidad INT NOT NULL,
     id_mazo INT NOT NULL,
-    id_carta INT NOT NULL, 
+    id_carta INT NOT NULL 
 );
