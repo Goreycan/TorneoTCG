@@ -54,8 +54,8 @@ public class RecintoController {
         try{
             RecintoDTO DTO = recintoService.Guardar(recinto);
             return new ResponseEntity<>(DTO, HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>("Error al registrar el recinto", HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+    return new ResponseEntity<>("Error al registrar el recinto", HttpStatus.BAD_REQUEST);
         }
     }
 

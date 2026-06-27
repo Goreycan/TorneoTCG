@@ -12,6 +12,7 @@ import com.example.TorneoTCG.dto.RegionDTO;
 import com.example.TorneoTCG.model.Comuna;
 import com.example.TorneoTCG.model.Recinto;
 import com.example.TorneoTCG.model.Region;
+import com.example.TorneoTCG.repository.ComunaRepository;
 import com.example.TorneoTCG.repository.RecintoRepository;
 
 import jakarta.transaction.Transactional;
@@ -23,6 +24,9 @@ public class RecintoService {
 
     @Autowired
     private  RecintoRepository recintoRepository;
+
+    @Autowired
+    private ComunaRepository comunaRepository;
 
     public List<RecintoDTO> obtenerTodos() {
         List<RecintoDTO> listaRecintos = new ArrayList<>();
@@ -40,9 +44,12 @@ public class RecintoService {
     }
 
     public RecintoDTO Guardar(Recinto nuevoRecinto) {
-        Recinto recintoGuardado= recintoRepository.save(nuevoRecinto);
-        return convertirADTO(recintoGuardado);
-    }
+    Comuna comuna = comunaRepository.findById(nuevoRecinto.getComuna().getId())
+            .orElseThrow(() -> new RuntimeException("Comuna no encontrada"));
+    nuevoRecinto.setComuna(comuna);
+    Recinto recintoGuardado = recintoRepository.save(nuevoRecinto);
+    return convertirADTO(recintoGuardado);
+}
 
     public RecintoDTO actualizar(Long id, RecintoDTO recintoDTO) {
         try {
