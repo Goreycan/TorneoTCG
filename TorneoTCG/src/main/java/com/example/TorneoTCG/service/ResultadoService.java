@@ -45,17 +45,19 @@ public class ResultadoService {
 
     public ResultadoDTO guardar(Resultado resultado) {
 
-        Resultado guardado = resultadoRepository.save(resultado);
+    Partida partida = partidaRepository.findById(resultado.getPartida().getId())
+            .orElseThrow(() ->
+                    new RuntimeException("Partida no encontrada"));
 
-        Partida partida = partidaRepository.findById(guardado.getPartida().getId())
-                .orElseThrow(() ->
-                        new RuntimeException("Partida no encontrada"));
+    resultado.setPartida(partida);
 
-        partida.setEstado("FINALIZADA");
-        partidaRepository.save(partida);
+    Resultado guardado = resultadoRepository.save(resultado);
 
-        return convertirADTO(guardado);
-    }
+    partida.setEstado("FINALIZADA");
+    partidaRepository.save(partida);
+
+    return convertirADTO(guardado);
+}
 
     public ResultadoDTO actualizar(Long id, Resultado resultado) {
     Resultado existente = resultadoRepository.findById(id)
