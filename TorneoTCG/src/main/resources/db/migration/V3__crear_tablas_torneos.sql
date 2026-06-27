@@ -1,36 +1,35 @@
-
 CREATE TABLE torneo (
-   id_torneo INT AUTO_INCREMENT PRIMARY KEY,
+   id_torneo BIGINT AUTO_INCREMENT PRIMARY KEY,
    nombre VARCHAR(50) NOT NULL,
-   fechaInicio Date NOT NULL,
-   fechaFin Date NOT NULL,
-   estado VARCHAR NOT NULL,
-   ubicacion VARCHAR(50) NOT NULL,
-   id_recinto INT(1) NOT NUll,  
+   fecha_inicio DATE NOT NULL,
+   fecha_fin DATE NOT NULL,
+   estado VARCHAR(255) NOT NULL,
+   id_recinto BIGINT NOT NULL,
+   CONSTRAINT fk_torneo_recinto FOREIGN KEY (id_recinto) REFERENCES recinto(id_recinto)
 );
 
 CREATE TABLE ronda (
-    id_ronda INT AUTO_INCREMENT PRIMARY KEY,
+    id_ronda BIGINT AUTO_INCREMENT PRIMARY KEY,
     numero_ronda INT NOT NULL,
     fecha DATE NOT NULL,
-    id_torneo INT NOT NULL,
+    id_torneo BIGINT NOT NULL,
     CONSTRAINT fk_ronda_torneo FOREIGN KEY (id_torneo) REFERENCES torneo(id_torneo)
 );
 
 CREATE TABLE participacion (
-    id_participacion INT AUTO_INCREMENT PRIMARY KEY,
+    id_participacion BIGINT AUTO_INCREMENT PRIMARY KEY,
     id_jugador INT NOT NULL,
-    id_torneo INT NOT NULL,
+    id_torneo BIGINT NOT NULL,
     ronda_inscripcion INT,
     CONSTRAINT fk_participacion_torneo FOREIGN KEY (id_torneo) REFERENCES torneo(id_torneo)
 );
 
 CREATE TABLE partida (
-    id_partida INT AUTO_INCREMENT PRIMARY KEY,
+    id_partida BIGINT AUTO_INCREMENT PRIMARY KEY,
     mesa VARCHAR(10) NOT NULL,
-    estado VARCHAR(30) NOT NULL,
+    estado VARCHAR(255) NOT NULL,
+    id_ronda BIGINT NOT NULL,
     cantidad_jugadores INT NOT NULL,
-    id_ronda INT NOT NULL,
     id_jugador1 INT NOT NULL,
     id_jugador2 INT NOT NULL,
     id_jugador3 INT NOT NULL,
@@ -40,8 +39,8 @@ CREATE TABLE partida (
 );
 
 CREATE TABLE resultado (
-    id_resultado INT AUTO_INCREMENT PRIMARY KEY,
-    id_partida INT NOT NULL UNIQUE,
+    id_resultado BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_partida BIGINT NOT NULL UNIQUE,
     id_ganador INT NOT NULL,
     puntaje_jugador1 INT,
     puntaje_jugador2 INT,

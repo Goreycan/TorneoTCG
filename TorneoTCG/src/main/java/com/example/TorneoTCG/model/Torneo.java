@@ -33,9 +33,11 @@ public class Torneo {
    private String nombre;
 
    @NotNull(message =  "Torneo debe tener fecha de inicio")
+   @Column(name = "fecha_inicio")
    private LocalDate fechaInicio;
 
    @NotNull(message =  "Torneo debe tener fecha de fin")
+   @Column(name = "fecha_fin")
    private LocalDate fechaFin;
 
    @NotBlank(message = "El estado de torneo es obligatorio")
