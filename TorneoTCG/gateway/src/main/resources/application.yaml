@@ -1,0 +1,51 @@
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+
+            - id: inventario-service 
+              uri: lb://inventario-service 
+              predicates:
+                - Path=/api/v1/cartas/**, /api/v1/mazos/**, /inventario/api-docs/**
+
+            # MICROSERVICIO DE  USUARIOS
+            - id: usuarios-service
+              uri: lb://usuarios-service 
+              predicates:
+                - Path=/api/v1/jugadores/**, /api/v1/organizadores/**, /usuarios/api-docs/**
+
+            #  MICROSERVICIO DE TORNEOS (El Motor)
+            - id: torneos-service
+              uri: lb://torneos-service 
+              predicates:
+                - Path=/api/v1/torneos/**, /api/v1/partidas/**, /api/v1/rondas/**, /torneos/api-docs/**
+
+            #  LOCACIONES
+            - id: locaciones-service
+              uri: lb://locaciones-service #  Region, Comuna, Recinto
+              predicates:
+                - Path=/api/v1/regiones/**, /api/v1/comunas/**, /api/v1/recintos/**, /locaciones/api-docs/**
+
+#  SWAGGER 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+    urls:
+      - name: 1. API Cartas y Mazos
+        url: /inventario/api-docs
+      - name: 2. API Usuarios y Perfiles
+        url: /usuarios/api-docs
+      - name: 3. API Motor de Torneos
+        url: /torneos/api-docs
+      - name: 4. API Locaciones 
+        url: /locaciones/api-docs
+  api-docs:
+    enabled: true
