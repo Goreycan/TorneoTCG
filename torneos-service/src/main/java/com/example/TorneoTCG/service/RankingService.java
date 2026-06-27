@@ -10,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.TorneoTCG.dto.RankingDTO;
-import com.example.TorneoTCG.model.Jugador;
 import com.example.TorneoTCG.model.Partida;
 import com.example.TorneoTCG.model.Resultado;
 import com.example.TorneoTCG.model.Ronda;
 import com.example.TorneoTCG.model.Torneo;
-import com.example.TorneoTCG.repository.JugadorRepository;
 import com.example.TorneoTCG.repository.PartidaRepository;
 import com.example.TorneoTCG.repository.ResultadoRepository;
 import com.example.TorneoTCG.repository.RondaRepository;
@@ -35,9 +33,6 @@ public class RankingService {
 
     @Autowired
     private ResultadoRepository resultadoRepository;
-
-    @Autowired
-    private JugadorRepository jugadorRepository;
 
     public List<RankingDTO> obtenerRankingPorTorneo(Long idTorneo) {
         Torneo torneo = torneoRepository.findById(idTorneo)
@@ -98,9 +93,7 @@ public class RankingService {
     }
 
     private String obtenerNombreJugador(Integer idJugador) {
-        return jugadorRepository.findById(idJugador)
-                .map(Jugador::getNombre)
-                .orElse(null);
+        return "Jugador " + idJugador;
     }
 
     private int calcularPuntos(Integer posicion) {
