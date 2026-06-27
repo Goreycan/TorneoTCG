@@ -45,14 +45,7 @@ public class Torneo {
 
    @NotNull(message = "El id de recinto es obligatorio")
    @Min(1)
-   private Long id_recinto;
-
-   public Long getIdRecinto() {
-      return id_recinto;
-   }
-
-   public void setIdRecinto(Long idRecinto) {
-      this.id_recinto = idRecinto;
-   }
+   @Column(name = "id_recinto")
+   private Long idRecinto;
 }
 
