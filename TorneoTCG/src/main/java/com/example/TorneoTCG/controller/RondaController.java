@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.TorneoTCG.dto.PartidaDTO;
 import com.example.TorneoTCG.dto.RondaDTO;
 import com.example.TorneoTCG.model.Ronda;
+import com.example.TorneoTCG.service.PartidaService;
 import com.example.TorneoTCG.service.RondaService;
 
 import jakarta.validation.Valid;
@@ -27,10 +29,23 @@ public class RondaController {
     @Autowired
     private RondaService rondaService;
 
+    @Autowired
+    private PartidaService partidaService;
+
     @GetMapping
     public ResponseEntity<List<RondaDTO>> todas() {
         List<RondaDTO> lista = rondaService.obtenerTodos();
         return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
+
+    @GetMapping("/{idRonda}/partidas")
+    public ResponseEntity<?> partidasPorRonda(@PathVariable Long idRonda) {
+        try {
+            List<PartidaDTO> lista = partidaService.obtenerPorRonda(idRonda);
+            return new ResponseEntity<>(lista, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")

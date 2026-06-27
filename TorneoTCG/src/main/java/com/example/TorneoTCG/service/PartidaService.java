@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.TorneoTCG.dto.PartidaDTO;
 import com.example.TorneoTCG.model.Partida;
+import com.example.TorneoTCG.model.Ronda;
 import com.example.TorneoTCG.repository.PartidaRepository;
+import com.example.TorneoTCG.repository.RondaRepository;
 
 @Service
 public class PartidaService {
@@ -16,11 +18,31 @@ public class PartidaService {
     @Autowired
     private PartidaRepository partidaRepository;
 
+    @Autowired
+    private RondaRepository rondaRepository;
+
     public List<PartidaDTO> obtenerTodos() {
 
         List<PartidaDTO> listaDTO = new ArrayList<>();
 
         List<Partida> partidas = partidaRepository.findAll();
+
+        for (Partida partida : partidas) {
+            listaDTO.add(convertirADTO(partida));
+        }
+
+        return listaDTO;
+    }
+
+    public List<PartidaDTO> obtenerPorRonda(Long idRonda) {
+
+        Ronda ronda = rondaRepository.findById(idRonda)
+                .orElseThrow(() ->
+                        new RuntimeException("Ronda no encontrada"));
+
+        List<PartidaDTO> listaDTO = new ArrayList<>();
+
+        List<Partida> partidas = partidaRepository.findByRonda(ronda);
 
         for (Partida partida : partidas) {
             listaDTO.add(convertirADTO(partida));
