@@ -1,0 +1,21 @@
+package com.example.TorneoTCG.Assemblers;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.stereotype.Component;
+import com.example.TorneoTCG.controller.OrganizadorController;
+import com.example.TorneoTCG.model.Organizador;
+
+@Component
+
+public class OrganizadorModelAssembler implements RepresentationModelAssembler<Organizador, EntityModel<Organizador>> {
+
+    @Override
+    public EntityModel<Organizador> toModel(Organizador organizador) {
+        return EntityModel.of(organizador,
+                linkTo(methodOn(OrganizadorController.class).obtenerPorId(organizador.getId())).withSelfRel(),
+                linkTo(methodOn(OrganizadorController.class).obtenerTodos()).withRel("organizadores"));
+    }
+
+}
