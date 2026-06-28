@@ -30,16 +30,16 @@ public class CartaMazoService {
 
     public List<CartaMazoDTO> obtenerTodas() {
         return cartaMazoRepository.findAll().stream()
-                 .map(this::convertirADTO)
-                 .toList();
+                .map(this::convertirADTO)
+                .toList();
     }
 
     public String agregarCartaAMazo(Long mazoId, Long cartaId, Integer cantidad) {
         Mazo mazo = mazoRepository.findById(mazoId)
-            .orElseThrow(() -> new RuntimeException("¡El Deck no existe!"));
-        
+                .orElseThrow(() -> new RuntimeException("¡El mazo no existe!"));
+
         Carta carta = cartaRepository.findById(cartaId)
-            .orElseThrow(() -> new RuntimeException("¡La carta no existe "));
+                .orElseThrow(() -> new RuntimeException("¡La carta no existe "));
 
         CartaMazo relacion = new CartaMazo();
         relacion.setMazo(mazo);
@@ -47,8 +47,15 @@ public class CartaMazoService {
         relacion.setCantidad(cantidad);
 
         cartaMazoRepository.save(relacion);
-        
-        return "¡Combo listo! Has añadido " + cantidad + " copias de '" + carta.getNombre() + "' al mazo '" + mazo.getNombre() + "'.";
+
+        return "¡Combo listo! Has añadido " + cantidad + " copias de '" + carta.getNombre() + "' al mazo '"
+                + mazo.getNombre() + "'.";
+    }
+
+    public CartaMazoDTO buscarPorId(Long id) {
+        CartaMazo relacion = cartaMazoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Relación carta-mazo no encontrada"));
+        return convertirADTO(relacion);
     }
 
     private CartaMazoDTO convertirADTO(CartaMazo cartaMazo) {
@@ -77,18 +84,18 @@ public class CartaMazoService {
     // ELIMINAR CARTA DE MAZO
     // =====================================
 
-public String eliminarCartaDeMazo(Long cartaId, Long mazoId) {
-    List<CartaMazo> relaciones = cartaMazoRepository.findAll();
-    for (CartaMazo relacion : relaciones) {
-        if (relacion.getCarta() != null &&
-            relacion.getMazo() != null &&
-            relacion.getCarta().getId().equals(cartaId) &&
-            relacion.getMazo().getId().equals(mazoId)) {
-            cartaMazoRepository.delete(relacion);
-            return "Carta eliminada del mazo exitosamente";
+    public String eliminarCartaDeMazo(Long cartaId, Long mazoId) {
+        List<CartaMazo> relaciones = cartaMazoRepository.findAll();
+        for (CartaMazo relacion : relaciones) {
+            if (relacion.getCarta() != null &&
+                    relacion.getMazo() != null &&
+                    relacion.getCarta().getId().equals(cartaId) &&
+                    relacion.getMazo().getId().equals(mazoId)) {
+                cartaMazoRepository.delete(relacion);
+                return "Carta eliminada del mazo exitosamente";
+            }
         }
+        return "No se encontró la relación carta-mazo";
     }
-    return "No se encontró la relación carta-mazo";
-}
-   
+
 }
