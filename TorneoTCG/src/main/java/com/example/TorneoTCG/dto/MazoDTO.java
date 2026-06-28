@@ -1,4 +1,5 @@
 package com.example.TorneoTCG.dto;
+
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -13,14 +14,9 @@ import lombok.NoArgsConstructor;
 public class MazoDTO {
 
     private Long id;
-
     private String nombre;
-
     private String descripcion;
-
-    private Integer idJugador;
-
+    private Long idJugador;
     private String nombreJugador;
-
     private List<String> nombresCartas;
 }

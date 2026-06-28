@@ -1,16 +1,18 @@
+
 server:
   port: 0 
 
 springdoc:
   api-docs:
-    path: /jugador/api-docs
-  packages-to-scan: com.example.TorneoTCG.controller
+    path: /torneo/api-docs
+  packages-to-scan: 
+    com.TorneoTCG.TorneoTCG.controller 
   use-management-port: false
   override-with-generic-response: true
 
 spring:
   application:
-    name: jugador-service
+    name: jugador-service # bloque oficial para Eureka
   flyway:
     enabled: true
     baseline-on-migrate: 'true'
@@ -25,6 +27,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 ---
+# Perfil DEV
 spring:
   config:
     activate:
@@ -39,6 +42,7 @@ spring:
       ddl-auto: none 
 
 ---
+# (Donde corren los test de JUnit)
 spring:
   config:
     activate:
@@ -53,6 +57,7 @@ spring:
       ddl-auto: update 
 
 ---
+# El producto final
 spring:
   config:
     activate:
@@ -64,4 +69,4 @@ spring:
     password: ''
   jpa:
     hibernate:
-      ddl-auto: none 
+      ddl-auto: none

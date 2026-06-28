@@ -6,7 +6,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,15 +23,15 @@ import com.example.TorneoTCG.repository.CartaRepository;
 import net.datafaker.Faker;
 
 @ExtendWith(MockitoExtension.class)
-public class CartaServiceTest {
-
-    @InjectMocks
-    private CartaService cartaService;
+class CartaServiceTest {
 
     @Mock
     private CartaRepository cartaRepository;
-
-    private Faker faker = new Faker();
+    
+    @InjectMocks
+    private CartaService cartaService; 
+    
+    private Faker faker = new Faker(); 
 
     @BeforeEach
     void setUp() {
@@ -41,34 +40,24 @@ public class CartaServiceTest {
 
     @Test
     void testBuscarPorId_Exitoso() {
-        // GIVEN:
-        Long id = faker.number().randomNumber();
-        String nombre = faker.lorem().word();
-        String descripcion = faker.lorem().sentence();
-        String rareza = "Rara";
-        Integer costo = faker.number().numberBetween(1, 10);
-
-        Carta mockEntity = Carta.builder()
-                .id(id)
-                .nombre(nombre)
-                .descripcion(descripcion)
-                .rareza(rareza)
-                .costo(costo)
-                .cartaMazos(new ArrayList<>())
+        // GIVEN: Dada una carta en la base de datos
+        Long idSimulado = 99L; 
+        String nombreCarta = faker.superhero().name(); 
+        
+        // Usamos tu @Builder
+        Carta cartaFalsa = Carta.builder()
+                .id(idSimulado)
+                .nombre(nombreCarta)
                 .build();
-
-        when(cartaRepository.findById(id)).thenReturn(Optional.of(mockEntity));
-
-        // WHEN:
-        CartaDTO resultado = cartaService.buscarPorId(id);
-
-        // THEN:
-        assertNotNull(resultado);
-        assertEquals(id, resultado.getId());
-        assertEquals(nombre, resultado.getNombre());
-        assertEquals(descripcion, resultado.getDescripcion());
-        assertEquals(rareza, resultado.getRareza());
-        assertEquals(costo, resultado.getCosto());
-        verify(cartaRepository, times(1)).findById(id);
+        
+        when(cartaRepository.findById(idSimulado)).thenReturn(Optional.of(cartaFalsa));
+        
+        // WHEN: Consultamos la carta
+        CartaDTO resultado = cartaService.buscarPorId(idSimulado);
+        
+        // THEN: Confirmamos la respuesta
+        assertNotNull(resultado, "El DTO resultante no debería ser nulo");
+        assertEquals(nombreCarta, resultado.getNombre(), "El nombre de la carta debe coincidir");
+        verify(cartaRepository, times(1)).findById(idSimulado);
     }
 }

@@ -28,7 +28,7 @@ public class Jugador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 3, max = 20, message = "El nombre debe tener entre 3 y 100 caracteres")
@@ -40,9 +40,9 @@ public class Jugador {
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @OneToMany(mappedBy = "jugador")
-    @ToString.Exclude
-    private List<Participacion> participaciones;
+    //@OneToMany(mappedBy = "jugador")
+    //@ToString.Exclude
+    //private List<Participacion> participaciones;
 
     @OneToMany(mappedBy = "jugador")
     @ToString.Exclude

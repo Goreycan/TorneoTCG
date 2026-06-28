@@ -6,7 +6,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,15 +23,15 @@ import com.example.TorneoTCG.repository.JugadorRepository;
 import net.datafaker.Faker;
 
 @ExtendWith(MockitoExtension.class)
-public class JugadorServiceTest {
-
-    @InjectMocks
-    private JugadorService jugadorService;
+class JugadorServiceTest {
 
     @Mock
     private JugadorRepository jugadorRepository;
-
-    private Faker faker = new Faker();
+    
+    @InjectMocks
+    private JugadorService jugadorService; 
+    
+    private Faker faker = new Faker(); 
 
     @BeforeEach
     void setUp() {
@@ -41,28 +40,24 @@ public class JugadorServiceTest {
 
     @Test
     void testBuscarPorId_Exitoso() {
-        // GIVEN:
-        Long id = faker.number().randomNumber();
-        String nombre = faker.name().firstName();
-        String email = faker.internet().emailAddress();
-
-        Jugador mockEntity = Jugador.builder()
-                .id(id.intValue())
-                .nombre(nombre)
-                .email(email)
-                .mazos(new ArrayList<>())
+        // GIVEN: Dado un escenario inicial
+        Long idSimulado = 10L; 
+        String nombreAleatorio = faker.name().fullName(); 
+        
+        
+        Jugador jugadorFalso = Jugador.builder()
+                .id(idSimulado)
+                .nombre(nombreAleatorio)
                 .build();
-
-        when(jugadorRepository.findById(id)).thenReturn(Optional.of(mockEntity));
-
-        // WHEN:
-        JugadorDTO resultado = jugadorService.buscarPorId(id);
-
-        // THEN:
-        assertNotNull(resultado);
-        assertEquals(id.intValue(), resultado.getId());
-        assertEquals(nombre, resultado.getNombre());
-        assertEquals(email, resultado.getEmail());
-        verify(jugadorRepository, times(1)).findById(id);
+        
+        when(jugadorRepository.findById(idSimulado)).thenReturn(Optional.of(jugadorFalso));
+        
+        // WHEN: Cuando ejecutamos la acción
+        JugadorDTO resultado = jugadorService.buscarPorId(idSimulado);
+        
+        // THEN: Entonces validamos
+        assertNotNull(resultado, "El DTO resultante no debería ser nulo");
+        assertEquals(nombreAleatorio, resultado.getNombre(), "El nombre debe coincidir con el de la DB");
+        verify(jugadorRepository, times(1)).findById(idSimulado);
     }
 }

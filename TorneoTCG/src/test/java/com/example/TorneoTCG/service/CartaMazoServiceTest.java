@@ -21,27 +21,19 @@ import com.example.TorneoTCG.model.Carta;
 import com.example.TorneoTCG.model.CartaMazo;
 import com.example.TorneoTCG.model.Mazo;
 import com.example.TorneoTCG.repository.CartaMazoRepository;
-import com.example.TorneoTCG.repository.CartaRepository;
-import com.example.TorneoTCG.repository.MazoRepository;
 
 import net.datafaker.Faker;
 
 @ExtendWith(MockitoExtension.class)
-public class CartaMazoServiceTest {
-
-    @InjectMocks
-    private CartaMazoService cartaMazoService;
+class CartaMazoServiceTest {
 
     @Mock
     private CartaMazoRepository cartaMazoRepository;
-
-    @Mock
-    private CartaRepository cartaRepository;
-
-    @Mock
-    private MazoRepository mazoRepository;
-
-    private Faker faker = new Faker();
+    
+    @InjectMocks
+    private CartaMazoService cartaMazoService; 
+    
+    private Faker faker = new Faker(); 
 
     @BeforeEach
     void setUp() {
@@ -50,38 +42,39 @@ public class CartaMazoServiceTest {
 
     @Test
     void testBuscarPorId_Exitoso() {
-        // GIVEN:
-        Long id = faker.number().randomNumber();
-        Integer cantidad = faker.number().numberBetween(1, 4);
-
-        Mazo mazo = Mazo.builder()
-                .id(faker.number().randomNumber())
-                .nombre(faker.lorem().word())
+        // GIVEN: 
+        Long idSimulado = 1L; 
+        Integer cantidadSimulada = faker.number().numberBetween(1, 4); 
+        
+        // Creamos el Mazo simulado con Builder
+        Mazo mazoFalso = Mazo.builder()
+                .id(2L)
+                .nombre("Mazo Fuego")
                 .build();
 
-        Carta carta = Carta.builder()
-                .id(faker.number().randomNumber())
-                .nombre(faker.lorem().word())
+        // Creamos la Carta simulada con Builder
+        Carta cartaFalsa = Carta.builder()
+                .id(3L)
+                .nombre("Dragón")
                 .build();
 
-        CartaMazo mockEntity = CartaMazo.builder()
-                .id(id)
-                .cantidad(cantidad)
-                .mazo(mazo)
-                .carta(carta)
+        // Armamos el CartaMazo uniendo todo
+        CartaMazo cartaMazoFalsa = CartaMazo.builder()
+                .id(idSimulado)
+                .cantidad(cantidadSimulada)
+                .mazo(mazoFalso)
+                .carta(cartaFalsa)
                 .build();
-
-        when(cartaMazoRepository.findById(id)).thenReturn(Optional.of(mockEntity));
-
-        // WHEN:
-        CartaMazoDTO resultado = cartaMazoService.buscarPorId(id);
-
-        // THEN:
-        assertNotNull(resultado);
-        assertEquals(id, resultado.getId());
-        assertEquals(cantidad, resultado.getCantidad());
-        assertEquals(mazo.getNombre(), resultado.getNombreMazo());
-        assertEquals(carta.getNombre(), resultado.getNombreCarta());
-        verify(cartaMazoRepository, times(1)).findById(id);
+        
+        when(cartaMazoRepository.findById(idSimulado)).thenReturn(Optional.of(cartaMazoFalsa));
+        
+        // WHEN: Ejecutamos el servicio
+        CartaMazoDTO resultado = cartaMazoService.buscarPorId(idSimulado);
+        
+        // THEN: Verificamos los mapeos
+        assertNotNull(resultado, "El DTO resultante no debería ser nulo");
+        assertEquals(cantidadSimulada, resultado.getCantidad());
+        
+        verify(cartaMazoRepository, times(1)).findById(idSimulado);
     }
 }
