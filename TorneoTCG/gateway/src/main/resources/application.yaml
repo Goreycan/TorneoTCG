@@ -1,4 +1,3 @@
-
 server:
   port: 8080
 
@@ -10,42 +9,35 @@ spring:
       server:
         webmvc:
           routes:
-
-            - id: inventario-service 
-              uri: lb://inventario-service 
+            # 1. JUGADOR SERVICE 
+            - id: jugador-service
+              uri: lb://jugador-service 
               predicates:
-                - Path=/api/v1/cartas/**, /api/v1/mazos/**, /inventario/api-docs/**
+                - Path=/api/jugadores/**, /api/mazos/**
 
-            # MICROSERVICIO DE  USUARIOS
-            - id: usuarios-service
-              uri: lb://usuarios-service 
+            # 2. TORNEO SERVICE 
+            - id: torneo-service
+              uri: lb://torneo-service 
               predicates:
-                - Path=/api/v1/jugadores/**, /api/v1/organizadores/**, /usuarios/api-docs/**
+                - Path=/api/torneos/**
 
-            #  MICROSERVICIO DE TORNEOS (El Motor)
-            - id: torneos-service
-              uri: lb://torneos-service 
+            # 3. RECINTO SERVICE 
+            - id: recinto-service
+              uri: lb://recinto-service 
               predicates:
-                - Path=/api/v1/torneos/**, /api/v1/partidas/**, /api/v1/rondas/**, /torneos/api-docs/**
+                - Path=/api/recintos/**
 
-            #  LOCACIONES
-            - id: locaciones-service
-              uri: lb://locaciones-service #  Region, Comuna, Recinto
-              predicates:
-                - Path=/api/v1/regiones/**, /api/v1/comunas/**, /api/v1/recintos/**, /locaciones/api-docs/**
 
-#  SWAGGER 
+# Swagger-UI 
 springdoc:
   swagger-ui:
     path: /swagger-ui/index.html
     urls:
-      - name: 1. API Cartas y Mazos
-        url: /inventario/api-docs
-      - name: 2. API Usuarios y Perfiles
-        url: /usuarios/api-docs
-      - name: 3. API Motor de Torneos
-        url: /torneos/api-docs
-      - name: 4. API Locaciones 
-        url: /locaciones/api-docs
+      - name: 1. API Jugadores y Mazos (jugador-service)
+        url: /api/jugadores/v3/api-docs
+      - name: 2. API Motor de Torneos (torneo-service)
+        url: /api/torneos/v3/api-docs
+      - name: 3. API Recintos y Locaciones (recinto-service)
+        url: /api/recintos/v3/api-docs
   api-docs:
     enabled: true
