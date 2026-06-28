@@ -27,6 +27,16 @@ public class CartaMazoController {
             : new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CartaMazoDTO> buscarPorId(@PathVariable Long id) {
+        try {
+            CartaMazoDTO dto = cartaMazoService.buscarPorId(id);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/mazo/{mazoId}/carta/{cartaId}")
     public ResponseEntity<String> agregarCartaAMazo(
             @Valid
