@@ -1,0 +1,24 @@
+package com.example.TorneoTCG.Assemblers;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.stereotype.Component;
+
+import com.example.TorneoTCG.controller.ComunaController;
+import com.example.TorneoTCG.model.Comuna;
+
+@Component
+
+public class ComunaModelAssembler implements RepresentationModelAssembler<Comuna, EntityModel<Comuna>> {
+
+    @Override
+    public EntityModel<Comuna> toModel(Comuna comuna) {
+        return EntityModel.of(comuna,
+                linkTo(methodOn(ComunaController.class).obtenerPorId(comuna.getId())).withSelfRel(),
+                linkTo(methodOn(ComunaController.class).obtenerTodos()).withRel("comunas"));
+    }
+
+}
