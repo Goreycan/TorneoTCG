@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.TorneoTCG.client.RecintoClient;
 import com.example.TorneoTCG.dto.TorneoDTO;
+import com.example.TorneoTCG.dtoexterno.RecintoExternoDTO;
 import com.example.TorneoTCG.model.Torneo;
 import com.example.TorneoTCG.repository.TorneoRepository;
 
@@ -15,6 +17,9 @@ public class TorneoService {
 
     @Autowired
     private TorneoRepository torneoRepository;
+
+    @Autowired
+    private RecintoClient recintoClient;
 
     public List<TorneoDTO> obtenerTodos() {
 
@@ -40,6 +45,8 @@ public class TorneoService {
 
     public TorneoDTO guardar(Torneo torneo) {
 
+        validarRecinto(torneo.getIdRecinto());
+
         Torneo guardado = torneoRepository.save(torneo);
 
         return convertirADTO(guardado);
@@ -52,6 +59,7 @@ public class TorneoService {
     existente.setFechaInicio(torneo.getFechaInicio());
     existente.setFechaFin(torneo.getFechaFin());
     existente.setEstado(torneo.getEstado());
+    validarRecinto(torneo.getIdRecinto());
     existente.setId_recinto(torneo.getId_recinto());
 
     Torneo actualizado = torneoRepository.save(existente);
@@ -66,6 +74,15 @@ public String eliminar(Long id) {
         return "Torneo no encontrado";
     }
 }
+
+    private void validarRecinto(Long idRecinto) {
+
+        RecintoExternoDTO recinto = recintoClient.obtenerRecinto(idRecinto);
+
+        if (recinto == null) {
+            throw new RuntimeException("Recinto no encontrado");
+        }
+    }
 
     private TorneoDTO convertirADTO(Torneo torneo) {
 

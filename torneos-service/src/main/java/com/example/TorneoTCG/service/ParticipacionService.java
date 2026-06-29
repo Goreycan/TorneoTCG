@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.TorneoTCG.client.JugadorClient;
 import com.example.TorneoTCG.dto.ParticipacionDTO;
+import com.example.TorneoTCG.dtoexterno.JugadorExternoDTO;
 import com.example.TorneoTCG.model.Participacion;
 import com.example.TorneoTCG.repository.ParticipacionRepository;
 
@@ -15,6 +17,9 @@ public class ParticipacionService {
 
     @Autowired
     private ParticipacionRepository participacionRepository;
+
+    @Autowired
+    private JugadorClient jugadorClient;
 
     public List<ParticipacionDTO> obtenerTodos() {
 
@@ -42,6 +47,8 @@ public class ParticipacionService {
 
     public ParticipacionDTO guardar(Participacion participacion) {
 
+        validarJugador(participacion.getIdJugador());
+
         Participacion guardada =
                 participacionRepository.save(participacion);
 
@@ -66,6 +73,15 @@ public class ParticipacionService {
         return "Participación no encontrada";
     }
 }
+
+    private void validarJugador(Integer idJugador) {
+
+        JugadorExternoDTO jugador = jugadorClient.obtenerJugador(idJugador);
+
+        if (jugador == null) {
+            throw new RuntimeException("Jugador no encontrado");
+        }
+    }
 
     private ParticipacionDTO convertirADTO(
             Participacion participacion) {
