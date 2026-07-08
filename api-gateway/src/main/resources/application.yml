@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: jugador-service
+          uri: lb://jugador-service
+          predicates:
+            - Path=/api/v1/jugadores/**
+        - id: torneos-service
+          uri: lb://torneos-service
+          predicates:
+            - Path=/api/v1/torneos/**
+        - id: recinto-service
+          uri: lb://recinto-service
+          predicates:
+            - Path=/api/v1/recintos/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
