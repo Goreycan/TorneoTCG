@@ -14,7 +14,7 @@
     <description>Microservicio de Torneos TCG</description>
     
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencyManagement>
     <dependencies>
