@@ -56,6 +56,26 @@ spring:
           uri: lb://torneos-service
           predicates:
             - Path=/api/v1/resultados/**
+        - id: torneos-service-v2-torneos
+          uri: lb://torneos-service
+          predicates:
+            - Path=/api/v2/torneos/**
+        - id: torneos-service-v2-rondas
+          uri: lb://torneos-service
+          predicates:
+            - Path=/api/v2/rondas/**
+        - id: torneos-service-v2-participaciones
+          uri: lb://torneos-service
+          predicates:
+            - Path=/api/v2/participaciones/**
+        - id: torneos-service-v2-partidas
+          uri: lb://torneos-service
+          predicates:
+            - Path=/api/v2/partidas/**
+        - id: torneos-service-v2-resultados
+          uri: lb://torneos-service
+          predicates:
+            - Path=/api/v2/resultados/**
 
 server:
   port: 8080
