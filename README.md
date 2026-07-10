@@ -67,3 +67,23 @@ Para verificar que todos los microservicios están levantados y registrados:
 
 ## Pruebas Unitarias
 El proyecto cuenta con pruebas unitarias implementadas con **JUnit 5 y Mockito**, alcanzando más del 80% de cobertura. Las pruebas siguen la estructura *Given-When-Then* validando la lógica de negocio sin depender de la base de datos real.
+
+---
+
+## Ejecución con Docker
+
+Para construir y levantar la arquitectura completa con Docker Compose:
+
+```bash
+docker compose build --no-cache
+docker compose up
+docker compose down
+```
+
+Alternativa antigua:
+
+```bash
+docker-compose build --no-cache
+docker-compose up
+docker-compose down
+```
