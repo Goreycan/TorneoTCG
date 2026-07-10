@@ -64,14 +64,4 @@ public class OrganizadorController {
     public ResponseEntity<OrganizadorDTO> actualizar(@PathVariable Long id, @Valid @RequestBody OrganizadorDTO organizadorDTO) {
         return ResponseEntity.ok(organizadorService.actualizar(id, organizadorDTO));
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarOrganizador(@PathVariable Long id) {
-        try{
-            String mensaje = organizadorService.eliminar(id);
-            return new ResponseEntity<>(mensaje, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>("Error al eliminar el organizador", HttpStatus.NOT_FOUND);
-        }
-    }
 }
