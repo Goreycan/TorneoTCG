@@ -59,16 +59,6 @@ public class OrganizadorService {
             throw new RuntimeException("Error al actualizar el organizador: " + e.getMessage());
         }
     }
-    public String eliminar(Long id) {
-        try {
-            Organizador C = organizadorRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException(" El organizador no existe"  ));
-            organizadorRepository.delete(C);
-            return "El organizador "+ C.getNombre() +"ha sido eliminado exitosamente";
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Error al eliminar el organizador: " + e.getMessage());
-        }
-    }
 
     private OrganizadorDTO convertirADTO(Organizador organizador) {
         OrganizadorDTO DTO = new OrganizadorDTO();
