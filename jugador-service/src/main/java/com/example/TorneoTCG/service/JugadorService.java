@@ -20,8 +20,8 @@ public class JugadorService {
 
     public List<JugadorDTO> obtenerTodos() {
         return jugadorRepository.findAll().stream()
-                 .map(this::convertirADTO)
-                 .toList();
+                .map(this::convertirADTO)
+                .toList();
     }
 
     public JugadorDTO buscarPorId(Integer id) {

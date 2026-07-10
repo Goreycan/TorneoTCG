@@ -77,6 +77,8 @@ public class RecintoService {
         RecintoDTO DTO = new RecintoDTO();
         DTO.setId(recinto.getId());
         DTO.setNombre(recinto.getNombre());
+        DTO.setCapacidad(recinto.getCapacidad());
+        DTO.setDireccion(recinto.getDireccion());
         DTO.setComuna(convertirComunaADTO(recinto.getComuna()));
         return DTO;
     }
