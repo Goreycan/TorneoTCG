@@ -2,88 +2,80 @@
 
 Sistema distribuido basado en arquitectura de microservicios para la gestión completa de torneos de Magic Commander. Este proyecto permite administrar jugadores, mazos, inscripciones, generación de rondas y registro de resultados.
 
+## Estrategia DevOps - GitFlow
 
-##  Arquitectura y Microservicios Implementados
+Para esta evaluación se utiliza **GitFlow simplificado**, porque permite mantener una rama estable (`main`), una rama de integración (`develop`) y ramas aisladas para nuevas funcionalidades y correcciones urgentes. Esto facilita la trazabilidad, revisión por Pull Request y control de versiones en un equipo colaborativo.
 
-El sistema está construido bajo el patrón de diseño **CSR (Controller-Service-Repository)**  y se compone de los siguientes microservicios independientes:
+### Ramas obligatorias
 
-1. **Microservicio Jugadores y Mazos:** Gestión de usuarios y la composición de sus cartas.
-2. **Microservicio Torneos y Rondas:** Estructura de competiciones e inscripciones.
-3. **Microservicio Partidas y Resultados:** Registro de enfrentamientos y puntajes.
-4. **Microservicio Infraestructura:** Gestión de locales, organizadores y ubicaciones.
-5. **API Gateway:** Enrutador central que unifica los endpoints (ej. `http://localhost:8080/api/v1/...`).
-6. **Eureka Server:** Servicio de descubrimiento (Service Discovery) para la conexión dinámica entre microservicios sin depender de puertos estáticos.
+- `main`: código estable y entregable.
+- `develop`: integración de funcionalidades antes de pasar a producción.
+- `feature/<nombre>`: desarrollo de nuevas funcionalidades.
+- `hotfix/<nombre>`: correcciones urgentes que deben llegar a la versión estable.
 
----
+### Flujo de trabajo
 
-## 🛠️ Tecnologías y Configuraciones Destacadas
+`feature/*` → Pull Request → `develop` → Pull Request → `main`
 
-Este ecosistema backend incorpora las siguientes tecnologías y buenas prácticas:
+Para una corrección crítica: `hotfix/*` → Pull Request → `main` y posterior sincronización con `develop`.
 
-* **Java & Spring Boot:** Framework principal.
-* **Spring Cloud Netflix Eureka:** Para el registro y descubrimiento automático de microservicios.
-* **Spring Cloud Gateway:** Enrutamiento centralizado y balanceo de carga (`@LoadBalanced`).
-* **Comunicación Inter-servicios:** Uso de DTOs externos con `@JsonIgnoreProperties(ignoreUnknown = true)` para manejar datos cruzados.
-* **HATEOAS:** Implementado para respuestas de API más enriquecidas y navegables.
-* **Perfiles YAML (`application.yml`):** Configuraciones dinámicas para entornos de desarrollo (`dev`), pruebas (`test`) y producción (`prod`).
-* **Documentación Centralizada (Swagger/OpenAPI):** Unificación de la documentación de todos los microservicios accesible desde el Gateway.
-* **CORS Origin:** Configuración implementada en los microservicios mediante `WebConfig` para permitir el consumo desde aplicaciones Frontend.
-* **Validaciones:** Lógica de validación separada en clases específicas (ej. `JugadorValidaciones`) para mantener los Services ligeros.
+## Convenciones de commits
 
----
+Se adopta Conventional Commits:
 
-## Instrucciones de Ejecución (Local)
+- `feat:` nueva funcionalidad.
+- `fix:` corrección de errores.
+- `docs:` documentación.
+- `test:` pruebas.
+- `refactor:` refactorización sin cambio funcional.
+- `ci:` automatización CI/CD.
 
-Para facilitar el despliegue de todos los microservicios al mismo tiempo, hemos creado scripts de automatización.
+Ejemplo: `feat: agregar validacion de jugador`.
 
-**Para Windows:**
+## Pull Requests y revisión
+
+Cada cambio debe realizarse en una rama propia y enviarse mediante Pull Request. El autor debe describir el cambio y su propósito. Antes del merge se deben revisar los archivos modificados, verificar las pruebas/compilación automatizada y resolver observaciones.
+
+La evaluación exige simular al menos **2 features y 1 hotfix** mediante Pull Requests.
+
+## GitHub Actions y CI/CD
+
+El repositorio debe ejecutar una acción de integración continua en cada `push` a `develop` y en cada Pull Request dirigido a `main`. La acción valida automáticamente que el código pueda integrarse, reduciendo errores antes del merge.
+
+## Estructura y control de versiones
+
+El proyecto contiene microservicios independientes, API Gateway, Eureka Server, Docker Compose y documentación. No se deben versionar secretos, contraseñas, archivos compilados ni configuraciones sensibles.
+
+## Arquitectura y Microservicios Implementados
+
+El sistema está construido bajo el patrón **CSR (Controller-Service-Repository)** y cuenta con microservicios para jugadores/mazos, torneos/rondas, partidas/resultados e infraestructura, además de API Gateway y Eureka Server.
+
+## Tecnologías
+
+- Java & Spring Boot
+- Spring Cloud Netflix Eureka
+- Spring Cloud Gateway
+- DTOs para comunicación inter-servicios
+- HATEOAS
+- YAML por perfiles
+- Swagger/OpenAPI
+- Docker Compose
+- JUnit 5 y Mockito
+
+## Ejecución local
+
+### Windows
 1. Clona el repositorio.
-2. Haz doble clic en el archivo `iniciar-todo.bat`.
+2. Ejecuta `iniciar-todo.bat`.
 
-**Para Mac / Linux:**
-1. Abre una terminal en la raíz del proyecto.
-2. Otorga permisos de ejecución: `chmod +x iniciar-todo.sh`
-3. Ejecuta el script: `./iniciar-todo.sh`
+### Mac / Linux
+1. Otorga permisos: `chmod +x iniciar-todo.sh`.
+2. Ejecuta `./iniciar-todo.sh`.
 
----
-
-## 🔗 Enlaces y Rutas Principales
-
-### API Gateway (Rutas Base)
-Todas las peticiones deben pasar por el API Gateway en el puerto `8080`:
-* Jugadores: `http://localhost:8080/api/v1/jugadores`
-* Torneos: `http://localhost:8080/api/v1/torneos`
-* 
-
-### Documentación Swagger
-Puedes visualizar los endpoints, modelos de datos y probar la API directamente en:
-* 📖 **[Swagger UI Unificado](http://localhost:8080/swagger-ui/index.html)**
-
-### Eureka Server
-Para verificar que todos los microservicios están levantados y registrados:
-* 🌐 **[Eureka Dashboard](http://localhost:8761/eureka/)**
-
----
-
-## Pruebas Unitarias
-El proyecto cuenta con pruebas unitarias implementadas con **JUnit 5 y Mockito**, alcanzando más del 80% de cobertura. Las pruebas siguen la estructura *Given-When-Then* validando la lógica de negocio sin depender de la base de datos real.
-
----
-
-## Ejecución con Docker
-
-Para construir y levantar la arquitectura completa con Docker Compose:
+## Docker
 
 ```bash
 docker compose build --no-cache
 docker compose up
 docker compose down
-```
-
-Alternativa antigua:
-
-```bash
-docker-compose build --no-cache
-docker-compose up
-docker-compose down
 ```
